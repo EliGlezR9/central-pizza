@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\AdminController;
 use Controllers\ApiController;
 use Controllers\LoginController;
 use Controllers\MenuController;
@@ -30,6 +31,7 @@ $router->get('/message', [LoginController::class, 'message']);
 
 //Area privada
 $router->get('/main-menu', [MenuController::class, 'index']);
+$router->get('/admin-panel', [AdminController::class, 'index']);
 
 //API de platillos
 $router->get('/api/platillos', [ApiController::class, 'index']);

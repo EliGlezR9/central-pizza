@@ -280,10 +280,8 @@ function mostrarResumen() {
         aumentarPlatillos.innerHTML = 'Aumentar numero de platillo';
         aumentarPlatillos.addEventListener('click', function() {
             contador ++;
-            //console.log(contador)
             cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir:</span> ${contador}`;
             precioFinal = (contador * precio);
-            //console.log(precioFinal);
             precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
         });
 
@@ -295,10 +293,8 @@ function mostrarResumen() {
                 return
             }else{
                 contador --;
-                //console.log(contador)
                 cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir:</span> ${contador}`;
                 precioFinal = (contador * precio);
-                //console.log(precioFinal);
                 precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
             }
         });

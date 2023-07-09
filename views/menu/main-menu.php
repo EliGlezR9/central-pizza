@@ -4,15 +4,16 @@
 
 <div class="barra">
     <p class="name-text">Bienvenido: <?php echo $nombre ?? '';?>!</p>
-
+    
+    <a class="button" href="/admin-panel">order history</a>
     <a class="button" href="/logout">Cerrar sesión</a>
+    
 </div>
 <div id="app">
     <nav class="tabs">
         <button class="actual" type="button" data-paso="1">Platillos</button>
         <button type="button" data-paso="2">Detalles de orden</button>
         <button type="button" data-paso="3">Order Summary</button>
-        <button type="button" data-paso="4">Order history</button>
     </nav>
     <div id="paso-1" class="seccion">
         <h2>Platillos</h2>
@@ -70,13 +71,7 @@
         <h2>Pedido Summary</h2>
         <p class="text-center">Verifica que la orden esté correcta, por favor</p>
         
-    </div> 
-
-    <div id="paso-4" class="seccion order-history">
-        <h2>order history</h2>
-        <p class="text-center">Historial de órdenes realizadas</p>
-        
-    </div> 
+    </div>  
 
     <div class="paginacion">
         <button
