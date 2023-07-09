@@ -1,0 +1,22 @@
+{
+    "name": "ruben/restaurant_orders",
+    "description": "proyecto de desarrollo web",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\" : "./",
+            "Controllers\\" : "./controllers",
+            "Model\\" : "./models",
+            "Classes\\" : "./classes"
+        }
+    },
+    "authors": [
+        {
+            "name": "Uzi Eliel Gonzalezs Ruiz",
+            "email": "eliel.gonzalez.r92@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    }
+}
