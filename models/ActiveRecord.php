@@ -141,15 +141,14 @@ class ActiveRecord {
         $query .= join("', '", array_values($atributos));
         $query .= " ') ";
 
-        //TODO Return error query
-        //return json_encode(['query' => $query]);
-
         // Resultado de la consulta
         $resultado = self::$db->query($query);
         return [
            'resultado' =>  $resultado,
            'id' => self::$db->insert_id
         ];
+        //TODO Return error query
+        return json_encode(['query' => $query]);
     }
 
     // Actualizar el registro

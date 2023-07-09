@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use Model\Pedido;
-use Model\PedidoPlatillo;
+use Model\PedidoPlatillos;
 use Model\Platillo;
 
 class APIController {
@@ -17,57 +17,23 @@ class APIController {
         $pedido = new Pedido($_POST);
         $resultado = $pedido->guardar();
 
-        echo json_encode($resultado);
-    }
-    
+        $id = $resultado['id'];
 
+    //Guarda el pedido y los platillos en tabla
+        $idPlatillos = explode(",", $_POST['platillos']);
+
+        foreach($idPlatillos as $idPlatillo){
+            $args = [
+                'pedidoId' => $id,
+                'platilloId' => $idPlatillo,
+                'mesaId' => '7'
+            ];
+            $pedidoPlatillo = new PedidoPlatillos($args);
+            $pedidoPlatillo->guardar();
+
+        }
+        
+        echo json_encode(['resultado' => $resultado]);
+    }
 }
 
-
-//$pedido = new Pedido($_POST);
-    //     $resultado = $pedido->guardar(); 
-    //     $id = $resultado['id'];
-        
-
-    //     //Almacena pedido y platillos
-    //     $idPlatillos = explode(",", $_POST['platillos']);
-
-    //     foreach($idPlatillos as $idPlatillo){
-    //         $args = [
-    //             'pedidoId' => $id,
-    //             'platilloId' => $idPlatillo
-    //         ];
-    //         $pedidoPlatillo = new PedidoPlatillo($args);
-    //         $pedidoPlatillo->guardar();
-    //     }
-
-    //     $respuesta = [
-    //         'resultado' => $resultado
-    //     ];
-    //     echo json_encode($respuesta);
-    // }
-
-
-// $id = $resultado['id'];
-
-        // //Guarda los platillos con el id del pedido 
-        // $idPlatillos = explode(",", $_POST['platillos']);
-
-        // foreach($idPlatillos as $idPlatillo){
-        //     $args = [
-        //         'platillosId' => $idPlatillo,
-        //         'pedidosId' => $id
-        //     ];
-        //     $pedidoplatillos = new PedidoPlatillo($args);
-        //     $pedidoplatillos->guardar();
-        // }
-        // //return respuesta
-        // $respuesta = [
-        //     'resultado' => $resultado
-        //];
-
-        
-
-         // $pedido = new Pedido($_POST);
-        // $resultado = $pedido->guardar();
-        // echo json_encode($resultado);

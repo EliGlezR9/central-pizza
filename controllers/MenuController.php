@@ -8,7 +8,8 @@ class MenuController{
     public static function index( Router $router ){
         
         session_start();
-        //debuguear($_SESSION);
+        
+        isAuth();
 
         $router->render('menu/main-menu', [
             'nombre' => $_SESSION['nombre'],

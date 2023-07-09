@@ -1,6 +1,6 @@
 let paso = 1;
 const pasoInicial = 1;
-const pasoFinal = 3;
+const pasoFinal = 4;
 
 let contador = 1;
 let precioFinal;
@@ -121,7 +121,7 @@ function paginaAnterior(){
         const url = 'http://localhost:3000/api/platillos';
         const resultado = await fetch(url);
         const platillos = await resultado.json();
-        //console.log(platillos);
+        
         mostrarPlatillos(platillos);
         
     } catch (error) {
@@ -211,7 +211,7 @@ function seleccionarHora(){
             mostrarAlerta('La hora seleccionada no es valida, verifique.', 'error', '.formulario');
         }else{
             pedido.hora = e.target.value;
-            console.log(pedido);
+            //console.log(pedido);
         }
     })
 }
@@ -280,10 +280,10 @@ function mostrarResumen() {
         aumentarPlatillos.innerHTML = 'Aumentar numero de platillo';
         aumentarPlatillos.addEventListener('click', function() {
             contador ++;
-            console.log(contador)
+            //console.log(contador)
             cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir:</span> ${contador}`;
             precioFinal = (contador * precio);
-            console.log(precioFinal);
+            //console.log(precioFinal);
             precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
         });
 
@@ -295,10 +295,10 @@ function mostrarResumen() {
                 return
             }else{
                 contador --;
-                console.log(contador)
+                //console.log(contador)
                 cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir:</span> ${contador}`;
                 precioFinal = (contador * precio);
-                console.log(precioFinal);
+                //console.log(precioFinal);
                 precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
             }
         });
@@ -341,7 +341,9 @@ function mostrarResumen() {
 async function enviarPedido(){
 
     const { nombre, id, mesa, fecha, hora, platillos } = pedido;
-    const idPlatillos = platillos.map( platillo => platillo.id );
+    const idPlatillos = platillos.map( platillo => platillo.id);
+    const precioPlatillos = platillos.map( platillo => platillo.precio);
+    //console.log(precioPlatillos);
     
     const datos = new FormData(); 
     datos.append('usuarioid', id); 
