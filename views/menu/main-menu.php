@@ -3,12 +3,11 @@
 
 
 <div class="barra">
-    <p class="name-text">Bienvenido: <?php echo $nombre ?? '';?>!</p>
-    
-    <a class="button" href="/admin-panel">order history</a>
-    <a class="button" href="/logout">Cerrar sesión</a>
-    
+    <p class="name-text">Bienvenido: <?php echo $nombre ?? '';?>!</p>   
+    <a class="button" href="/admin-panel">Oder history</a>
+    <a class="button" href="/logout">Log out</a>
 </div>
+
 <div id="app">
     <nav class="tabs">
         <button class="actual" type="button" data-paso="1">Platillos</button>
@@ -51,6 +50,7 @@
                     id="fecha"    
                     type="date"
                     min="<?php echo date('Y-m-d');?>"
+                    value="<?php echo $fecha; ?>"
                 />
             </div>
 

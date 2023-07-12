@@ -1,6 +1,6 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', '', 'pizzeria_central_mvc');
+$db = mysqli_connect('localhost', 'root', 'root', 'pizzeria_central_mvc');
 
 
 if (!$db) {

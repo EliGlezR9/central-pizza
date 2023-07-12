@@ -19,10 +19,10 @@
     border-bottom: 1px solid v.$gris;
     margin-bottom: 1rem;
 
-    .cantidad-button{
+    .button-add{
         display: block;
         width: 100%;
-        background-color: v.$azul;
+        background-color: v.$verde;
         border: none;
         border-radius: 1rem;
         margin-bottom: 1rem;
@@ -32,11 +32,34 @@
         font-weight: v.$bold;
         color: v.$blanco;
         transition: background-color 300ms ease;
-
+    
     
         &:hover{
             cursor: pointer;
-            background-color: darken(v.$azul, 15%);
+            background-color: darken(v.$verde, 15%);
         }
     }
+
+    .button-rest{
+        display: block;
+        width: 100%;
+        background-color: v.$rojo;
+        border: none;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+        padding: .5rem;
+        justify-content: space-between;
+        text-transform: uppercase;
+        font-weight: v.$bold;
+        color: v.$blanco;
+        transition: background-color 300ms ease;
+    
+    
+        &:hover{
+            cursor: pointer;
+            background-color: darken(v.$rojo, 15%);
+        }
+    }
+
 }
+

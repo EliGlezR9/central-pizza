@@ -153,8 +153,8 @@ class ActiveRecord {
            'resultado' =>  $resultado,
            'id' => self::$db->insert_id
         ];
-        //TODO Return error query
-        return json_encode(['query' => $query]);
+        // //TODO Return error query
+        // return json_encode(['query' => $query]);
     }
 
     // Actualizar el registro

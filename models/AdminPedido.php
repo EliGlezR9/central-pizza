@@ -25,5 +25,11 @@ class AdminPedido extends ActiveRecord{
         $this->precio = $args['precio'] ?? '';
     }
 
+    public function getUserId() {
+        $query = " SELECT id FROM " . self::$tabla . " WHERE id = '" . $this->id . "' LIMIT 1";
+        $resultado = self::$db->query($query); 
+        return $resultado;
+    }
+
 
 }

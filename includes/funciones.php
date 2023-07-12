@@ -13,6 +13,13 @@ function s($html) : string {
     return $s;
 }
 
+function esUltimo($actual, $proximo) :bool{
+    if($actual !== $proximo){
+        return true;
+    }
+    return false;
+}
+
 function isAuth() :void {
     if(!isSet($_SESSION['login'])){
         header('Location: /');

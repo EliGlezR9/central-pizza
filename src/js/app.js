@@ -2,8 +2,12 @@ let paso = 1;
 const pasoInicial = 1;
 const pasoFinal = 4;
 
+//variables para calculo de pedido
 let contador = 1;
-let precioFinal;
+let precio = 0;
+let cantidadPLatillo = 1;
+let precioPlatillo = 0;
+let precioFinal = 0
 
 const pedido = {
     nombre: '',
@@ -34,10 +38,7 @@ function iniciarApp(){
     seleccionarMesa();
     seleccionarFecha();
     seleccionarHora();
-
-    mostrarResumen();
-    
-
+    mostrarResumen();  
 }
 
 function mostrarSeccion(){
@@ -67,7 +68,6 @@ function tabs(){
     botones.forEach( boton => {
         boton.addEventListener('click', function(e){
             paso =  parseInt(e.target.dataset.paso);
-
             mostrarSeccion();
             botonesPaginador();
         });
@@ -91,9 +91,7 @@ function botonesPaginador(){
         paginaAnt.classList.remove('ocultar');
         paginaSig.classList.remove('ocultar');
     }
-
     mostrarSeccion();
-
 }
 
 function paginaSiguiente(){
@@ -103,7 +101,6 @@ function paginaSiguiente(){
         paso++;
         botonesPaginador();
     });
-
 }
 
 function paginaAnterior(){
@@ -148,20 +145,16 @@ function mostrarPlatillos(platillos){
             seleccionarPlatillo(platillo);
         }
         
-
         platilloDiv.appendChild(nombreplatillo);
         platilloDiv.appendChild(precioPlatillo);
         
         document.querySelector('#servicios').appendChild(platilloDiv);
-
     });
-
 }
 
 function seleccionarPlatillo(platillo){
     const {id} = platillo;
     const { platillos } = pedido;
-
     const divPlatillo = document.querySelector(`[data-id-platillo="${id}"]`);
 
     if( platillos.some( agregado => agregado.id === id)){
@@ -170,14 +163,11 @@ function seleccionarPlatillo(platillo){
     }else{
         pedido.platillos = [...platillos, platillo];
         divPlatillo.classList.add('seleccionado');
-    }
-
-    //console.log(pedido);     
+    } 
 }
 
  function nombreCliente(){
     pedido.nombre = document.querySelector('#nombre').value;
-
 }
 
 function idCliente(){
@@ -188,7 +178,6 @@ function seleccionarMesa(){
     const inputMesa = document.querySelector('#mesa');
     inputMesa.addEventListener('input', function(){
         pedido.mesa = inputMesa.value;
-
     })
 }
 
@@ -196,7 +185,6 @@ function seleccionarFecha(){
     const inputFecha = document.querySelector('#fecha');
     inputFecha.addEventListener('input', function(){
         pedido.fecha = inputFecha.value;
-
     })
 }
 
@@ -211,7 +199,6 @@ function seleccionarHora(){
             mostrarAlerta('La hora seleccionada no es valida, verifique.', 'error', '.formulario');
         }else{
             pedido.hora = e.target.value;
-            //console.log(pedido);
         }
     })
 }
@@ -260,12 +247,26 @@ function mostrarResumen() {
         const {id, nombre, precio} = platillos;
         let contador = 1;
         let precioFinal = 0;
-        
-        const contenedorPlatillo =document.createElement('DIV');
+            
+        const contenedorPlatillo = document.createElement('DIV');
         contenedorPlatillo.classList.add('contenedor-platillo');
         
         const textoPlatillo = document.createElement('P');
         textoPlatillo.textContent = nombre;
+
+        const aumentarPlatillos = document.createElement('BUTTON');
+        aumentarPlatillos.classList.add('button-add');
+        aumentarPlatillos.innerHTML = 'Aumentar numero de platillo';
+        aumentarPlatillos.onclick = function() {
+            aumentarPlatillosContador(precio);
+        }
+        
+        const quitarPlatillos = document.createElement('BUTTON');
+        quitarPlatillos.classList.add('button-rest');
+        quitarPlatillos.innerHTML = 'disminuir numero de platillo';
+        quitarPlatillos.onclick = function(){
+            disminuirPlatillosContador(precio);
+        }
 
         const cantidadPLatillo = document.createElement('P');
         cantidadPLatillo.classList.add('cantidad-platillo');
@@ -274,30 +275,7 @@ function mostrarResumen() {
         const precioPlatillo = document.createElement('P');
         precioPlatillo.classList.add('precio-platillo');
         precioPlatillo.innerHTML = `<span>Precio: </span> $${precio}`;
-
-        const aumentarPlatillos = document.createElement('BUTTON');
-        aumentarPlatillos.classList.add('cantidad-button');
-        aumentarPlatillos.innerHTML = 'Aumentar numero de platillo';
-        aumentarPlatillos.addEventListener('click', function() {
-            contador ++;
-            cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir:</span> ${contador}`;
-            precioFinal = (contador * precio);
-            precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
-        });
-
-        const quitarPlatillos = document.createElement('BUTTON');
-        quitarPlatillos.classList.add('cantidad-button');
-        quitarPlatillos.innerHTML = 'quitar numero de platillo';
-        quitarPlatillos.addEventListener('click', function() {
-            if(contador === 1){
-                return
-            }else{
-                contador --;
-                cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir:</span> ${contador}`;
-                precioFinal = (contador * precio);
-                precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
-            }
-        });
+        
 
         contenedorPlatillo.appendChild(textoPlatillo);
         contenedorPlatillo.appendChild(cantidadPLatillo);
@@ -309,7 +287,7 @@ function mostrarResumen() {
     });
 
     const headingDetalles = document.createElement('H3');
-    headingDetalles.textContent = 'Detalles de la orden';
+    headingDetalles.textContent = 'Mostrando detalles de su orden';
     summary.appendChild(headingDetalles);
 
     const mesaPedido = document.createElement('P');
@@ -326,13 +304,58 @@ function mostrarResumen() {
     botonFinalPedido.classList.add('button');
     botonFinalPedido.textContent = 'Enviar pedido';
     botonFinalPedido.onclick = enviarPedido;
+    
+    const botonFinalPedido1 = document.createElement('P');
+    botonFinalPedido1.classList.add('contenido-summary');
+    botonFinalPedido1.textContent = precioFinal;
+    
 
     summary.appendChild(mesaPedido);
     summary.appendChild(fechaPedido);
     summary.appendChild(horaPedido);
+    summary.appendChild(botonFinalPedido1);
     summary.appendChild(botonFinalPedido);
+    
+}
+
+function aumentarPlatillosContador(precio){
+    contador ++;
+    
+    precioFinal = (contador * precio);
+    precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
+
+    const cantidadPLatillo = document.createElement('P');
+    cantidadPLatillo.classList.add('cantidad-platillo');
+    cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir: </span> ${contador}`;
+        
+    const precioPlatillo = document.createElement('P');
+    precioPlatillo.classList.add('precio-platillo');
+    precioPlatillo.innerHTML = `<span>Precio: </span> $${precio}`;
+    
+    console.log(contador);
+    console.log(precioFinal);
 
 }
+
+function disminuirPlatillosContador(precio){
+    if(contador === 1){
+        return
+    }else{
+        contador --;
+        cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir:</span> ${contador}`;
+        precioFinal = (contador * precio);
+        precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
+    }
+    console.log(contador);
+    console.log(precioFinal);
+}
+
+function totalPagar(precioFinal){  
+    let totalpedidoPagar = precioFinal += precioFinal;
+    console.log(totalpedidoPagar);
+}
+
+
 
 async function enviarPedido(){
 
@@ -367,7 +390,7 @@ async function enviarPedido(){
             }).then( () =>{
                 setTimeout(() => {
                     window.location.reload();
-                }, 2000);
+                }, 1500);
                 
             })
         }
