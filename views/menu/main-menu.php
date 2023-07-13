@@ -3,7 +3,7 @@
 
 
 <div class="barra">
-    <p class="name-text">Bienvenido: <?php echo $nombre ?? '';?>!</p>   
+    <p class="name-text">Bienvenid@: <?php echo $nombre ?? '';?>!</p>   
     <a class="button" href="/admin-panel">Oder history</a>
     <a class="button" href="/logout">Log out</a>
 </div>

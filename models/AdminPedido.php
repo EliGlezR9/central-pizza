@@ -28,8 +28,9 @@ class AdminPedido extends ActiveRecord{
     public function getUserId() {
         $query = " SELECT id FROM " . self::$tabla . " WHERE id = '" . $this->id . "' LIMIT 1";
         $resultado = self::$db->query($query); 
-        return $resultado;
+        debuguear($resultado);
     }
+    
 
 
 }

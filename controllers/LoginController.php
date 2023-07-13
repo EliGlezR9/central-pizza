@@ -13,6 +13,7 @@ class LoginController{
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $auth = new Usuario($_POST);
+            //debuguear($auth);
             
             $alertas = $auth->validarLogin();
 
@@ -22,23 +23,24 @@ class LoginController{
 
                 if($usuario){
                     //Verificar password
-                    $usuario->comprobarPasswordAndVerificado($auth->password);
-                    //Autenticar la sesion
-                    session_start();
+                    if($usuario->comprobarPasswordAndVerificado($auth->password)){
+                        //Autenticar la sesion
+                        session_start();
 
-                    $_SESSION['id'] = $usuario->id;
-                    $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
-                    $_SESSION['email'] = $usuario->email;
-                    $_SESSION['login'] = true;
-                    
-                    //Re-dirrecionamiento
-                    if($usuario->admin === "1"){
-                        $__SESSION['admin'] = $usuario->admin ?? null;  
-                        header('Location: /admin');                      
-                    }else{
-                        header('Location: /main-menu');
+                        $_SESSION['id'] = $usuario->id;
+                        $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
+                        $_SESSION['email'] = $usuario->email;
+                        $_SESSION['login'] = true;
+                        //debuguear($_SESSION);
+
+                        //Re-dirrecionamiento
+                        if($usuario->admin === "1"){
+                            $__SESSION['admin'] = $usuario->admin ?? null;  
+                            header('Location: /admin');                      
+                        }else{
+                            header('Location: /main-menu');
+                        }
                     }
-
                 }else{
                     Usuario::setAlerta('error', 'Usuario no encontrado.');
                 }

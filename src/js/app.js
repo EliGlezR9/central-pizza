@@ -7,7 +7,7 @@ let contador = 1;
 let precio = 0;
 let cantidadPLatillo = 1;
 let precioPlatillo = 0;
-let precioFinal = 0
+let precioFinal;
 
 const pedido = {
     nombre: '',
@@ -127,6 +127,10 @@ function paginaAnterior(){
 }
 
 function mostrarPlatillos(platillos){
+    precioFinal;
+    contador;
+    precio;
+    
     platillos.forEach( platillo => {
         const {id, nombre, precio} = platillo;
         
@@ -240,34 +244,28 @@ function mostrarResumen() {
     const {mesa, fecha, hora, platillos} = pedido;
 
     const headingPedido = document.createElement('H3');
-    headingPedido.textContent = 'Resumen de pedidos ordenados';
+    headingPedido.textContent = 'Resumen órdenes enviadas';
     summary.appendChild(headingPedido);
 
     platillos.forEach(platillos => {     
         const {id, nombre, precio} = platillos;
-        let contador = 1;
-        let precioFinal = 0;
             
         const contenedorPlatillo = document.createElement('DIV');
         contenedorPlatillo.classList.add('contenedor-platillo');
         
         const textoPlatillo = document.createElement('P');
-        textoPlatillo.textContent = nombre;
+        textoPlatillo.textContent = nombre; 
 
         const aumentarPlatillos = document.createElement('BUTTON');
         aumentarPlatillos.classList.add('button-add');
         aumentarPlatillos.innerHTML = 'Aumentar numero de platillo';
-        aumentarPlatillos.onclick = function() {
-            aumentarPlatillosContador(precio);
-        }
-        
+        aumentarPlatillos.addEventListener('click', addPlatillos);  
+    
         const quitarPlatillos = document.createElement('BUTTON');
         quitarPlatillos.classList.add('button-rest');
         quitarPlatillos.innerHTML = 'disminuir numero de platillo';
-        quitarPlatillos.onclick = function(){
-            disminuirPlatillosContador(precio);
-        }
-
+        quitarPlatillos.addEventListener('click', restPlatillos);  
+        
         const cantidadPLatillo = document.createElement('P');
         cantidadPLatillo.classList.add('cantidad-platillo');
         cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir: </span> ${contador}`;
@@ -275,12 +273,12 @@ function mostrarResumen() {
         const precioPlatillo = document.createElement('P');
         precioPlatillo.classList.add('precio-platillo');
         precioPlatillo.innerHTML = `<span>Precio: </span> $${precio}`;
-        
+
 
         contenedorPlatillo.appendChild(textoPlatillo);
-        contenedorPlatillo.appendChild(cantidadPLatillo);
         contenedorPlatillo.appendChild(aumentarPlatillos);
         contenedorPlatillo.appendChild(quitarPlatillos);
+        contenedorPlatillo.appendChild(cantidadPLatillo);
         contenedorPlatillo.appendChild(precioPlatillo);
         
         summary.appendChild(contenedorPlatillo);
@@ -305,64 +303,43 @@ function mostrarResumen() {
     botonFinalPedido.textContent = 'Enviar pedido';
     botonFinalPedido.onclick = enviarPedido;
     
-    const botonFinalPedido1 = document.createElement('P');
-    botonFinalPedido1.classList.add('contenido-summary');
-    botonFinalPedido1.textContent = precioFinal;
+    const precioTotalOrden = document.createElement('P');
+    precioTotalOrden.classList.add('contenido-summary');
+    precioTotalOrden.innerHTML = `<span>Total de su orden: </span> ${precioFinal}`;
     
-
+    //Detalles finales del pedido
     summary.appendChild(mesaPedido);
     summary.appendChild(fechaPedido);
     summary.appendChild(horaPedido);
-    summary.appendChild(botonFinalPedido1);
+    summary.appendChild(precioTotalOrden);
     summary.appendChild(botonFinalPedido);
     
 }
 
-function aumentarPlatillosContador(precio){
+function addPlatillos(){
     contador ++;
-    
-    precioFinal = (contador * precio);
-    precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
-
-    const cantidadPLatillo = document.createElement('P');
-    cantidadPLatillo.classList.add('cantidad-platillo');
-    cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir: </span> ${contador}`;
-        
-    const precioPlatillo = document.createElement('P');
-    precioPlatillo.classList.add('precio-platillo');
-    precioPlatillo.innerHTML = `<span>Precio: </span> $${precio}`;
-    
-    console.log(contador);
-    console.log(precioFinal);
-
+    console.log('Click en agregar platos')
+    console.log(contador)
+    precioPlatillo = (contador * precio);
+    console.log(precioPlatillo);
 }
 
-function disminuirPlatillosContador(precio){
+function restPlatillos(){
     if(contador === 1){
-        return
+        Swal.fire('mínimo de platillo es: 1');
     }else{
         contador --;
-        cantidadPLatillo.innerHTML = `<span>Numero de platillo a servir:</span> ${contador}`;
-        precioFinal = (contador * precio);
-        precioPlatillo.innerHTML = `<span>Precio:</span> $${precioFinal}`;
+        console.log('Click en disminuir platos')
+        console.log(contador)
     }
-    console.log(contador);
-    console.log(precioFinal);
+    
 }
-
-function totalPagar(precioFinal){  
-    let totalpedidoPagar = precioFinal += precioFinal;
-    console.log(totalpedidoPagar);
-}
-
 
 
 async function enviarPedido(){
 
     const { nombre, id, mesa, fecha, hora, platillos } = pedido;
     const idPlatillos = platillos.map( platillo => platillo.id);
-    const precioPlatillos = platillos.map( platillo => platillo.precio);
-    //console.log(precioPlatillos);
     
     const datos = new FormData(); 
     datos.append('usuarioid', id); 

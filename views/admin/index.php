@@ -4,7 +4,7 @@
 
 
 <div class="barra">
-    <p class="name-text">Bienvenido: <?php
+    <p class="name-text">Bienvenid@: <?php
 
 use Model\Pedido;
 
@@ -28,8 +28,17 @@ use Model\Pedido;
     </form>
 </div>
 
+<?php
+    if(count($pedidos) === 0){
+        echo '<h2>No hay ordenes para mostrar en esta fecha.</h2>';
+    }
+?>
+
 
 <div id="pedidos-admin">
+    <?php 
+    //debuguear($pedidos);
+    ?>
     <ul class="pedidos">
                 <?php
                     $idPedido = 0;
@@ -64,4 +73,10 @@ use Model\Pedido;
         } //Fin de ForEach ?>
     </ul>
 </div>
+
+<?php
+
+    $script = "<script src='build/js/buscador.js'></script>"
+
+?>
 

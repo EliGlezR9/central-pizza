@@ -9,20 +9,18 @@ use MVC\Router;
 class AdminController {
 
     public static function index( Router $router ){
+        $userId = $_SESSION['id'];
+        //debuguear($userId);
+        $fecha = $_GET['fecha']?? date('Y-m-d') ;
+        $fechas = explode('-', $fecha);
 
-        session_start();
-        //$_SESSION['id'] = $usuario->id;
-        $fecha = date('Y-m-d');
-        //$userId = s($_GET['id']);
-        // //buscar usuario por el token
-        //$usuario = Usuario::where('id', $userId);
-
-        //Cosulta a la DB para obtener el ID de usuario.
-        
+        if(!checkdate( $fechas[1], $fechas[2], $fechas[0] )){
+            header('Location: /404');
+        }
         
         //Consulta a la DB
         $consulta = "SELECT pedidos.id, pedidos.hora, pedidos.fecha, CONCAT( usuarios.nombre, ' ', usuarios.apellido) as cliente, ";
-        $consulta .= " usuarios.id, usuarios.email, usuarios.telefono, platillos.nombre as platillo, platillos.precio  ";
+        $consulta .= " usuarios.email, usuarios.telefono, platillos.nombre as platillo, platillos.precio  ";
         $consulta .= " FROM pedidos  ";
         $consulta .= " LEFT OUTER JOIN usuarios ";
         $consulta .= " ON pedidos.usuarioId=usuarios.id  ";
@@ -30,8 +28,9 @@ class AdminController {
         $consulta .= " ON pedidoplatillos.pedidoId=pedidos.id ";
         $consulta .= " LEFT OUTER JOIN platillos ";
         $consulta .= " ON platillos.id=pedidoplatillos.platilloId ";
-        $consulta .= " WHERE fecha =  '{$fecha}' ";
-        $consulta .= " AND usuarios.id = '3' ";
+        $consulta .= " WHERE usuarios.id = '{$userId}'";
+        $consulta .= " AND fecha = '{$fecha}' ";
+        
 
         
 
